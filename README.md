@@ -12,7 +12,7 @@ For detailed instructions follow:
 
 
 Directory structure
-_____________________________________________________________________________
+```
 |-- _.gitignore              # So that we don't commit environment passwords
 |-- _table.py        		# Creates the table in the Dynamo db database
 |-- _raspberrypi.pem        	# Credentials needed to sign in to AWS
@@ -21,4 +21,4 @@ _____________________________________________________________________________
 |	|-- _upload.py        	# Pushes sensor readings to AWS
 |	|-- _Adafruit_Python_MCP3008/examples  # Adafruit package to read sensor 
 |	|	|-- _simpletest.py     # Test pgsql
-_____________________________________________________________________________
+```
