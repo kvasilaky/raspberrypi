@@ -1,0 +1,145 @@
+#Sending your Water sensor values to the cloud
+
+# I am not using AWS IOT. But this tutorial does for more info: http://www.fhilitski.com/2016/11/temperature-sensor-with-raspberry-pi-3-and-aws/
+
+####################
+# Create AWS Account
+####################
+# Got to console.aws.amazon.com/iam/home?#/users
+# Create a new user
+	user: raspberrypi
+	psswd: raspberry17
+
+# Download the security credentials .csv file (that's your key)
+
+	You successfully created the users shown below. You can view and download user security credentials. You can also email users instructions for signing in to the AWS Management Console. This is the last time these credentials will be available to download. However, you can create new credentials at any time.
+
+	Users with AWS Management Console access can sign-in at: https://863552311864.signin.aws.amazon.com/console
+
+	User
+	raspberrypi
+	Access key ID
+	AKIAIH677BMTT5HEONVA
+	Secret access key
+	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
+
+# Creat an instance
+# Create a new key pair
+# Download the .pem file
+# Place that file in a folder
+# Navigate to that folder from the command line
+$ cd /Users/kathrynvasilaky/Documents/OneDrive/Python/raspberrypiagain
+$ chmod 400 raspberrypi.pem
+
+##########################
+# Install the AWS CLI Tools
+##########################
+# Create account and keys" http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-set-up.html
+# Downlooad CLI: http://docs.aws.amazon.com/cli/latest/userguide/installing.html
+	$ pip install --upgrade --user awscli
+
+		kathryns-Air-2:raspberrypi kathrynvasilaky$ aws configure
+		AWS Access Key ID [****************XM3A]: AKIAIH677BMTT5HEONVA
+		AWS Secret Access Key [****************kDSI]: maki80IXLdzGXMoq/V5bYyS+r347epx2kQvCW/3G
+		Default region name [us-east-1]: us-east-1
+		Default output format [None]: 
+
+#Pick up your Public DNS on the instance page online and enter it into the belows ssh
+	Instance ID
+	i-020150683902855be
+	Public DNS (IPv4)
+	ec2-52-33-158-145.us-west-2.compute.amazonaws.com
+
+# Access your instance (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html)
+	kathryns-Air-2:raspberrypi kathrynvasilaky$ ssh -i /Users/kathrynvasilaky/Documents/OneDrive/Python/raspberrypi/raspberrypi.pem ec2-user@ec2-52-33-158-145.us-west-2.compute.amazonaws.com
+
+		       __|  __|_  )
+		       _|  (     /   Amazon Linux AMI
+		      ___|\___|___|
+
+		https://aws.amazon.com/amazon-linux-ami/2017.03-release-notes/
+		6 package(s) needed for security, out of 6 available
+		Run "sudo yum update" to apply all updates.
+		[ec2-user@ip-172-31-29-85 ~]$ 
+
+# And we are in!
+# This is the instance where the cron job will sit. First let's setup a dynamo db 
+
+################################
+# Setting up the dynamo db table
+################################
+# We'll setup a virtual environment so we can install boto3, which we need to connect to our Dynamo DB
+# Follow: https://aws.amazon.com/premiumsupport/knowledge-center/python-boto3-virtualenv/
+	[ec2-user@ip-172-31-29-85 ~]$ sudo yum install update
+	[ec2-user@ip-172-31-29-85 ~]$ which python
+		/usr/bin/python
+		[ec2-user@ip-172-31-29-85 ~]$ python
+		Python 2.7.12 (default, Sep  1 2016, 22:14:00) 
+		[GCC 4.8.3 20140911 (Red Hat 4.8.3-9)] on linux2
+		Type "help", "copyright", "credits" or "license" for more information.
+		>>> quit()
+	[ec2-user@ip-172-31-29-85 ~]$ which python3.4
+		/usr/bin/python3.4
+	[ec2-user@ip-172-31-29-85 ~]$ pwd
+		/home/ec2-user
+	[ec2-user@ip-172-31-29-85 ~]$ cd venv
+	[ec2-user@ip-172-31-29-85 venv]$ pwd
+		/home/ec2-user/venv
+	[ec2-user@ip-172-31-29-85 venv]$ virtualenv -p /usr/bin/python3.4 python34
+		Running virtualenv with interpreter /usr/bin/python3.4
+		Using base prefix '/usr'
+		New python executable in python34/bin/python3.4
+		Also creating executable in python34/bin/python
+		Installing setuptools, pip...done.
+	[ec2-user@ip-172-31-29-85 venv]$ source /home/ec2-user/venv/python34/bin/activate
+	(python34)[ec2-user@ip-172-31-29-85 venv]$ 
+	(python34)[ec2-user@ip-172-31-29-85 venv]$ which python
+		~/venv/python34/bin/python
+	(python34)[ec2-user@ip-172-31-29-85 venv]$ pip install boto3
+		You are using pip version 6.0.8, however version 9.0.1 is available.
+		You should consider upgrading via the 'pip install --upgrade pip' command.
+		Collecting boto3
+		  Downloading boto3-1.4.4-py2.py3-none-any.whl (127kB)
+		.
+		.
+		.
+		Successfully installed boto3-1.4.4 botocore-1.5.46 docutils-0.13.1 jmespath-0.9.2 python-dateutil-2.6.0 s3transfer-0.1.10 six-1.10.
+		(python34)[ec2-user@ip-172-31-29-85 venv]$ python
+		Python 3.4.3 (default, Sep  1 2016, 23:33:38) 
+		[GCC 4.8.3 20140911 (Red Hat 4.8.3-9)] on linux
+		Type "help", "copyright", "credits" or "license" for more information.
+		>>> import boto3
+		>>> quit()
+	(python34)[ec2-user@ip-172-31-29-85 venv]$ 
+
+
+# Cool, now that we have boto we can connect to our database. What database? Oh, yeah, let's create it. 
+# We created a table.py file that we'll upload to aws
+# And then a file to push data to that table 
+
+#####################
+# CREATE the DATABASE
+#####################
+# Ok - Create the tabe on dynamodb, go back to aws CLI
+	(python34)[ec2-user@ip-172-31-29-85 ~]$ cd venv
+	(python34)[ec2-user@ip-172-31-29-85 venv]$ touch table.py
+# Copy paste the table code from table.py
+	(python34)[ec2-user@ip-172-31-29-85 venv]$ nano table.py 
+# Create the database
+	(python34)[ec2-user@ip-172-31-29-85 venv]$ python table.py 
+
+#########################################
+# UPDATE the DATABASE (Go pack to your pi)
+##########################################
+pi@raspberrypi:~ $ touch update.py
+pi@raspberrypi:~ $ nano update.py
+# Copy past the code from my update.py file. You will have to replace the AWS key's with your own, and the to/from emails, which will send the water reading to your email. 
+# pip install smtplib (command that sends you the email)
+# Test it out
+	pi@raspberrypi:~ $ sudo python update.py
+# Check your database on AWS to see if a reading got pushed, and if you received an email
+
+
+
+
+

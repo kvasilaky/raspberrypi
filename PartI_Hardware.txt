@@ -1,0 +1,33 @@
+#PART I: Hardware
+https://computers.tutsplus.com/tutorials/build-a-raspberry-pi-moisture-sensor-to-monitor-your-plants--mac-52875
+
+	Now to get started you need to buy the supplies:
+	- Raspberry Pi Model B
+	https://www.amazon.com/Raspberry-Pi-RASP-PI-3-Model-Motherboard/dp/B01CD5VC92/ref=sr_1_1?ie=UTF8&qid=1464211986&sr=8-1&keywords=Raspberry+Pi+model+B
+	- internet connection
+	- Half size breadboard
+	https://www.amazon.com/DFRobot-Point-Interlocking-Solderless-Breadboard/dp/B01B0IPJTC/ref=sr_1_7?ie=UTF8&qid=1464212040&sr=8-7&keywords=Half-size+breadboard
+	- Female to male jumper wires
+	https://www.amazon.com/Jumper-Wires-Premium-200mm--Female/dp/B008MRZSH8/ref=sr_1_2?ie=UTF8&qid=1464212097&sr=8-2&keywords=female-to-male+jumper+wires
+	- Male to male jumper wires (various sizes)
+	https://www.amazon.com/Elego-Solderless-Flexible-Breadboard-Arduino/dp/B01EV47GI4/ref=sr_1_12?ie=UTF8&qid=1464212342&sr=8-12&keywords=Male-to-male+jumper+wires
+	- MCP3008
+	https://www.amazon.com/Adafruit-MCP3008-8-Channel-10-Bit-Interface/dp/B00NAY3RB2/ref=sr_1_4?ie=UTF8&qid=1464212558&sr=8-4&keywords=MCP3008
+	- Octopus soil moisture sensor brick
+	https://www.amazon.com/Phantom-YoYo-Octopus-Moisture-Compatible/dp/B00ALUTN1G/ref=sr_1_1?ie=UTF8&qid=1464212678&sr=8-1&keywords=Octopus+Soil+Moisture+Sensor+Brick
+	- RGB Negative 16x2 LCD+Keypad Kit 
+	https://www.adafruit.com/product/1110
+	- Stacking header for raspberry pi 2x13 extra tall
+	https://www.adafruit.com/product/1112
+	- Android USB cable 
+	https://www.amazon.com/dp/B013PVKQHC/ref=asc_df_B013PVKQHC4974952/?tag=hyprod-20&creative=394997&creativeASIN=B013PVKQHC&linkCode=df0&hvadid=167151358503&hvpos=1o1&hvnetw=g&hvrand=16211425504375905365&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=9003597&hvtargid=pla-181858344291
+	- Soldering Iron 
+	https://www.amazon.com/Magneto-Tools-Pieces-Soldering-Iron/dp/B01M4JW8YK/ref=sr_1_7?ie=UTF8&qid=1494273209&sr=8-7&keywords=soldering+iron
+	- Ethernet Cable 
+	https://www.amazon.com/dp/B01LWPOL1D/ref=sxr_pa_click_within_right_3?pf_rd_m=ATVPDKIKX0DER&pf_rd_p=2957865822&pf_rd_r=DEEBVTX796TKTT23G2B3&pd_rd_wg=3RnKv&pf_rd_s=desktop-rhs-carousels&pf_rd_t=301&pd_rd_w=AbjgU&pf_rd_i=ethernet+cable&pd_rd_r=PRFA60C2ZX6BBBBRX8X0&psc=1
+
+
+# See raspberry.pptx for assembly steps with photos. 
+# We followed http://bit.ly/2qhbcuK for wiring.
+(https://computers.tutsplus.com/tutorials/build-a-raspberry-pi-moisture-sensor-to-monitor-your-plants--mac-52875)
+
