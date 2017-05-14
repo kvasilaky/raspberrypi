@@ -17,8 +17,8 @@ _____________________________________________________________________________
 ├── table.py        		# Creates the table in the Dynamo db database
 ├── raspberrypi.pem        	# Credentials needed to sign in to AWS
 ├── credentials.csv  		# Stores your AWS keys 
-├──  onmypi/                # Files that should be on your pi
-│   ├──  upload.py        	# Pushes sensor readings to AWS
-│   ├──  Adafruit_Python_MCP3008/examples  # Adafruit package to read sensor 
-│   │   ├──  simpletest.py     # Test pgsql
+├── onmypi/                # Files that should be on your pi
+│   ├── upload.py        	# Pushes sensor readings to AWS
+│   ├── Adafruit_Python_MCP3008/examples  # Adafruit package to read sensor 
+│   │   ├── simpletest.py     # Test pgsql
 _____________________________________________________________________________
