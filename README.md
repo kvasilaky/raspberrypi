@@ -14,6 +14,7 @@ For detailed instructions follow:
 Directory structure
 _____________________________________________________________________________
 |-- .gitignore              # So that we don't commit environment passwords
+
 |-- table.py        		# Creates the table in the Dynamo db database
 |-- raspberrypi.pem        	# Credentials needed to sign in to AWS
 |-- credentials.csv  		# Stores your AWS keys 
