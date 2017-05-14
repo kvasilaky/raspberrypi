@@ -13,13 +13,12 @@ For detailed instructions follow:
 
 Directory structure
 _____________________________________________________________________________
-|-- .gitignore              # So that we don't commit environment passwords
-
-|-- table.py        		# Creates the table in the Dynamo db database
-|-- raspberrypi.pem        	# Credentials needed to sign in to AWS
-|-- credentials.csv  		# Stores your AWS keys 
-|-- onmypi/                # Files that should be on your pi
-|	|-- upload.py        	# Pushes sensor readings to AWS
-|	|-- Adafruit_Python_MCP3008/examples  # Adafruit package to read sensor 
-|	|	|-- simpletest.py     # Test pgsql
+|-- _.gitignore              # So that we don't commit environment passwords
+|-- _table.py        		# Creates the table in the Dynamo db database
+|-- _raspberrypi.pem        	# Credentials needed to sign in to AWS
+|-- _credentials.csv  		# Stores your AWS keys 
+|-- _onmypi/                # Files that should be on your pi
+|	|-- _upload.py        	# Pushes sensor readings to AWS
+|	|-- _Adafruit_Python_MCP3008/examples  # Adafruit package to read sensor 
+|	|	|-- _simpletest.py     # Test pgsql
 _____________________________________________________________________________
