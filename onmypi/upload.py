@@ -53,7 +53,11 @@ import smtplib
 fromaddr = 'from@gmail.com'
 toaddrs  = 'to@gmail.com'
 
-msg = 'Be calm. The water level is at' + " " + str(m)
+if m>0:
+        msg = 'Be calm. The water level is at' + " " + str(m)
+else:
+        msg = 'Freak out! The water level is at' + " " + str(m)
+
 
 # Credentials (if needed)
 username = 'myusername'

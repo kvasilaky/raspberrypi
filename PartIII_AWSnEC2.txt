@@ -7,8 +7,9 @@
 ####################
 # Got to console.aws.amazon.com/iam/home?#/users
 # Create a new user
-	user: raspberrypi
-	psswd: raspberry17
+	user: email@gmail.com, userid
+	psswd: mypassword
+	account#: myaccount#
 
 # Download the security credentials .csv file (that's your key)
 
@@ -19,9 +20,9 @@
 	User
 	raspberrypi
 	Access key ID
-	AKIAIH677BMTT5HEONVA
+	AKIXXXXXXXXXXXXXXXHEONVA
 	Secret access key
-	maki80IXLdzGXMoq/V5bYyS+r347epx2kQvCW/3G
+	maki80IXLdzGXMoq/V5bYyS+XXXXXXXXXXXkQvCW/3G
 
 # Creat an instance
 # Create a new key pair
@@ -29,6 +30,7 @@
 # Place that file in a folder
 # Navigate to that folder from the command line
 $ cd /Users/kathrynvasilaky/Documents/OneDrive/Python/raspberrypiagain
+# protect a file against accidental overwriting
 $ chmod 400 raspberrypi.pem
 
 ##########################
@@ -37,10 +39,9 @@ $ chmod 400 raspberrypi.pem
 # Create account and keys" http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-set-up.html
 # Downlooad CLI: http://docs.aws.amazon.com/cli/latest/userguide/installing.html
 	$ pip install --upgrade --user awscli
-
-		kathryns-Air-2:raspberrypi kathrynvasilaky$ aws configure
-		AWS Access Key ID [****************XM3A]: AKIAIH677BMTT5HEONVA
-		AWS Secret Access Key [****************kDSI]: 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
+kathryns-Air-2:raspberrypi kathrynvasilaky$ aws configure
+		AWS Access Key ID [****************XM3A]: AKIXXXXXXXXXXXXXXXHEONVA
+		AWS Secret Access Key [****************kDSI]: maki80IXLdzGXMoq/V5bYyS+XXXXXXXXXXXkQvCW/3G
 		Default region name [us-east-1]: us-east-1
 		Default output format [None]: 
 
@@ -138,6 +139,46 @@ pi@raspberrypi:~ $ nano update.py
 # Test it out
 	pi@raspberrypi:~ $ sudo python update.py
 # Check your database on AWS to see if a reading got pushed, and if you received an email
+https://console.aws.amazon.com/dynamodb/home?region=us-east-1#tables:selected=DAILYWATER
+
+
+#########################################
+# AUTOMATE THE PUSHES (Go pack to your pi)
+##########################################
+#Next step - add a cron job to do this upload every few hours
+#Check you have cron installed, but most linux machines do 
+pi@raspberrypi:~ $ ps aux | grep crond
+#you should see crond in red
+
+# http://www.wexoo.net/20130406/running-cron-jobs-on-raspberry-pi-in-raspbmc
+# https://raspberrypi.stackexchange.com/questions/29033/cant-run-python-script-from-cron
+# Put [ #!/usr/bin/sudo python ] at the top of the upload.py file
+# Make the file executable
+pi@raspberrypi:~ $ chmod +x /home/pi/upload.py
+pi@raspberrypi:~ $ crontab - e
+	15 10 * * *  /home/pi/upload.py
+	ctrl+o, enter, ctrl+x
+# Start the cron service
+pi@raspberrypi:~ $ sudo /etc/init.d/cron start
+# You might have to reboot
+pi@raspberrypi:~ $ reboot
+
+# To stop jobs: 
+pi@raspberrypi:~ $ sudo /etc/init.d/cron stop
+# To check on jobs
+pi@raspberrypi:~ $ sudo /etc/init.d/cron status
+
+#check for scheduled jobs
+pi@raspberrypi:~ $ crontab -l
+
+# Make sure the date is the right time
+pi@raspberrypi:~ $ date
+Mon  8 May 16:23:27 UTC 2017
+# If it's not you want to reset it with this format $ date -s "8 MAY 2017 12:24:00"
+pi@raspberrypi:~ $ sudo date -s "8 MAY 2017 12:24:00"
+pi@raspberrypi:~ $ date
+Mon  8 May 12:24:02 UTC 2017
+
 
 
 
