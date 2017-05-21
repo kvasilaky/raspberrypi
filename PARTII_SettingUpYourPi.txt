@@ -20,7 +20,7 @@ Install any updates now (could take up to 2 hours)
 # GET PI IP  
 ############
 	#To get into your Pi you need to find it's internal ip address
-		$ pip install nmag
+		$ sudo apt-get install nmap
 	#Find your internal (not external) router address
 		$ ifconfig
 	# In all the output junk you'll see you're internal router address 192.168.1.XXX (mine today is 192.168.1.216)
