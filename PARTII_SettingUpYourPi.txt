@@ -27,7 +27,7 @@ Install any updates now (could take up to 2 hours)
 	# Now look for the raspberry pi (https://braindrivendevelopment.com/2014/12/02/using-nmap-to-find-a-raspberry-pi-within-a-network/)
 	# The following command scans between addresses around your computer's ip (192.168.1.0)
 	# You will have to plug into an ethernet cable
-		$ nmap -sn 192.168.43.47/24
+		$ nmap -sn 192.168.43.47/24 
 	# One line will have the ip address for your raspberry pi computer via ethernet cable
 	# Nmap scan report for raspberrypi.fios-router.home (192.168.1.134)
 	# Boom! You can now get in there
@@ -86,7 +86,7 @@ Install any updates now (could take up to 2 hours)
 # Raspberry Pi has connected to the network. If not, check that your password and ESSID are correct.
 # Note that the Pi will have two IP addresses assigned to it now; one via the ethernet and one via the wlan0
 
-	pi@raspberrypi:~ $ ifconfig wlan0
+	pi@raspberrypi:~ $ ifconfig wlan0 #should pull up your wlan0 ip address
 #You might have to run these commands for the change to take effect	
 	pi@raspberrypi:~ $ sudo ifdown wlan0
 	pi@raspberrypi:~ $ sudo ifup wlan0
@@ -97,17 +97,16 @@ Install any updates now (could take up to 2 hours)
 
 # You're ready to remove the ethernet cable and find the pi's IP address via the wlan0
 #Pip install fing. It find's devices' IP addresses
-	$pip install fing 
-	$sudo fing -r1
+	$ pip install fing 
+	$ sudo fing -r1
 			18:16:01 > Discovery progress 25%
 			18:16:01 > Host is up:   192.168.1.221
            	HW Address:   B8:27:EB:4B:38:22 (Raspberry Pi Foundation)
            	Hostname:     raspberrypi
-# The new ip address should pop up 
+# The new ip address should pop up if it didn't with "sudo ifconfig wlan0" inside the pi
 # Sign back in but now using the wlan0 (https://www.raspberrypi.org/documentation/remote-access/ssh/README.md)
-
-	$ ssh pi@192.168.1.221
-
+	#192.168.1.86 (Portland)
+	$ ssh pi@192.168.1.221  
 ########################
 # Testing Water Readings
 ########################
@@ -143,4 +142,12 @@ Install any updates now (could take up to 2 hours)
 		|   23 |   11 |    9 |    9 |    7 |  684 |   11 |   20 |
 		|   25 |   12 |   10 |    9 |    8 |  683 |   12 |   21 |
 
+########################
+# Meaning of the Reading?
+########################
 
+So what do these numbers mean? The analog readings from the Octopus sensor are from 0-950 according to: http://www.electronicoscaldas.com/datasheet/OBSoil-01_ElecFreaks.pdf. A function reads the voltage from the pin (between 0v and 5v), and outputs an integer value between 0 and 1023 scaled to the voltage. So, if there was 1v on the pin, mcp.read_adc() would return a value of 204, and if there was 5v to the pin, mcp.read_adc() would return a value of 1023.
+
+If you assume that a 5V reading from the sensor is 100% soil saturation, 0V is 0% moisture content, and that the sensor's voltage varies linearly with the soil moisture, then to get soil moisture content you'd just take the reading and divide it by 1023.
+
+But I can't seem to find documentation from the sensor manufacturer that that relationship is necessarily linear. 
